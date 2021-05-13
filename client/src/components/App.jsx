@@ -11,8 +11,11 @@ class App extends React.Component {
 
     this.state = {
       item: '',
-      quantity: ''
+      quantity: '',
+      groceriesList: groceriesData
     }
+
+    // console.log(this.state);
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -21,7 +24,7 @@ class App extends React.Component {
 
   handleChange(event) {
 
-    // console.log(event.target);
+    console.log(event.target);
     this.setState({
       [event.target.name]: event.target.value
     });
@@ -35,10 +38,14 @@ class App extends React.Component {
     var newGrocery = {
       name: this.state.item,
       quantity: this.state.quantity
-    }
+    };
 
-    this.setState(groceriesData.concat(newGrocery));
+    console.log(newGrocery);
 
+    // this.setState(groceriesData.concat(newGrocery));
+    this.setState({
+      groceriesList: [...this.state.groceriesList, newGrocery]
+    });
   }
 
   render() {
@@ -50,13 +57,13 @@ class App extends React.Component {
       <h1>Grocery List</h1>
       <form onSubmit={this.handleSubmit}>
         <label> Item
-          <input name="item" onChange={this.handleChange} />
+          <input name="item" onChange={this.handleChange} value={this.state.item} />
         </label>
         <label> Quantity
-          <input name="quantity" onChange={this.handleChange} />
+          <input name="quantity" onChange={this.handleChange} value={this.state.quantity}/>
         </label>
         <button>Add Grocery</button>
-        <GroceryList groceryItem={groceriesData}/>
+        <GroceryList groceryItem={this.state.groceriesList}/>
       </form>
     </div>
 
